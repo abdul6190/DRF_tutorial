@@ -6,6 +6,18 @@ from rest_framework.views import APIView
 from rest_framework import generics,mixins
 
 
+
+class CourseViewList(generics.ListCreateAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    
+class CourseViewDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    lookup_field = "id"
+
+
+'''
 class CourseViewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
@@ -30,6 +42,8 @@ class CourseViewDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixi
     
     def delete(self, req, id):
         return self.destroy(req, pk=id)
+
+'''
 
 
 '''
