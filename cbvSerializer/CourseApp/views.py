@@ -4,9 +4,16 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import generics,mixins
+from rest_framework import viewsets
 
 
+class CourseViewSets(viewsets.ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    lookup_field = "id"
 
+
+'''
 class CourseViewList(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
@@ -15,7 +22,7 @@ class CourseViewDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     lookup_field = "id"
-
+'''
 
 '''
 class CourseViewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
