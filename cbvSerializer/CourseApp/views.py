@@ -3,8 +3,36 @@ from .serializers import CourseSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework import generics,mixins
 
 
+class CourseViewList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    
+    def get(self, req):
+        return self.list(req)
+    
+    def post(self, req):
+        return self.create(req)
+
+
+class CourseViewDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    lookup_field = "id"
+    
+    def get(self, req, id):
+        return self.retrieve(req, pk=id)
+    
+    def put(self, req, id):
+        return self.update(req, pk=id)
+    
+    def delete(self, req, id):
+        return self.destroy(req, pk=id)
+
+
+'''
 class CourseViewList(APIView):
     def get(self,req):
         courses = Course.objects.all()
@@ -45,4 +73,6 @@ class CourseViewDetails(APIView):
         course = self.get_course(id)
         course.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+'''
+
             
